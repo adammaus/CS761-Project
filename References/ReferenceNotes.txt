@@ -1,0 +1,40 @@
+Contractive Auto-Encoders: Explicit Invariance During Feature Extraction
+http://techtalks.tv/talks/contractive-auto-encoders-explicit-invariance-during-feature-extraction/54426/
+http://www.icml-2011.org/papers/455_icmlpaper.pdf
+
+Adam's Notes
+- Explanation of Jacobian portion at 4:00
+- Want same representation for small changes to the training points through an invariant hidden layer.
+- Lower jacobian norm correlates with better generalization error
+- Possibly compare to stacked contractive auto-encoders. Invariance increases as more stacking. Further radii map to the same representation.
+
+Higher Order Contractive Auto-Encoder
+http://videolectures.net/ecmlpkdd2011_rifai_contractive/
+http://www.iro.umontreal.ca/~vincentp/Publications/CAE_H_ECML2011.pdf
+
+Adam's Notes
+- Auto-encoder is a encoder and a decoder.
+- learns efficient representations by trying to reconstruct data
+- Train an AE using a cost function which is the reconstruction mean square error
+- 1st Order CAE: Frobenius norm of the Jacobian of the Hidden Layer (weights)
+- For Higher Order CAE, use stochastic approximation of the Hessian Frobenius norm
+- Want invariance in the hidden layer. Robust to small changes in input space
+- Want locality around the training puts. Not the whole space.
+- After 50 singular values, all the directions have contracted
+- Estimation of the Global Input Space: average the ratio of the distance between sample points and distance between points in feature space as a ratio of the radius.
+- Reconstruction error wants to expand in different directions and the regularization term tries to contract the directions
+- By looking at the directions and magnitudes of the singular values you get the local tangent (local dimensionality) of the manifold
+- local charts and atlas using first few singular values of the Jacobian helps to define the manifold
+- Data Sets: Writers Corpus, CIFAR-10, and MNIST, rot, bg-img, rect
+
+Random Other Resources that Adam found:
+http://stats.stackexchange.com/questions/14827/how-to-calculate-derivative-of-the-contractive-auto-encoder-regularization-term
+
+Learning invariant features through local space contraction (Rifai et al. 2011)
+http://arxiv.org/pdf/1104.4153.pdf
+
+A Simple Algorithm for Nuclear Norm Regularized Problems
+http://www.icml2010.org/papers/196.pdf
+
+Manifold Tangent Classifier (uses Contractive Auto-Encoders)
+http://videolectures.net/nips2011_dauphin_manifold/

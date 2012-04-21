@@ -1,0 +1,22 @@
+Regularization of Contractive Auto-Encoders using the Schatten Norm
+
+Adam Maus (maus@cs.wisc.edu)
+Brian Nixon (nixon@cs.wisc.edu)
+
+Auto-encoders have traditionally been used to perform unsupervised learning to learn a useful representation of data that minimizes reconstruction error. Contractive auto-encoders (1) encourage robust feature extraction by penalizing a function's sensitivity to particular training inputs using the Frobenius norm of the Jacobian of the nonlinear mapping function. The algorithm penalizes singular values of the Jacobian trying to keep their values small and the function insensitive to tiny corruptions of the data. Further research has studied higher-order representations and regularization using the Frobenius norm of the Hessian of the function for a particular point (2). The focus of this project will be to study how the choice of the Frobenius norm affects these results. The Forbenius norm is a special case of the Schatten Norm with p = 2. The Schatten Norm is a matrix norm that is equivalent to the p-norm of the singular values of a matrix. Regularizing with the Nuclear or Trace norm, the Schatten Norm with p = 1, should encourage the Jacobian or Hessian to be low rank, sparse, and may produce a better estimate of the manifold for a particular point but at the expense of more computation (3). If time permits, we could also explore how well regularizing with the spectral norm, p = infinity, approximates the manifold.
+
+If you are interested in joining this project, please let me know.
+
+(1) Contractive Auto-Encoders: Explicit Invariance During Feature Extraction
+http://www.icml-2011.org/papers/455_icmlpaper.pdf
+
+(2) Higher Order Contractive Auto-Encoder
+http://www.iro.umontreal.ca/~vincentp/Publications/CAE_H_ECML2011.pdf
+
+(3) A Simple Algorithm for Nuclear Norm Regularized Problems
+http://www.icml2010.org/papers/196.pdf
+
+Some resources on the Schatten Norm:
+http://en.wikipedia.org/wiki/Matrix_norm
+http://en.wikipedia.org/wiki/Schatten_norm
+http://www.cs.uwaterloo.ca/~watrous/quant-info/lecture-notes/02.pdf
