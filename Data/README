@@ -1,1 +1,8 @@
-We can put datasets in directories here
+Rifai2011.pdf uses datasets from http://www.iro.umontreal.ca/~lisa/icml2007
+basic: smaller subset of MNIST: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist.zip
+rot: digits with added random rotation: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist_rotation_new.zip
+bg-rand: digits with random noise background: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist_background_images.zip
+bg-img: digits with random image background: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist_background_random.zip 
+bg-img-rot: digits with rotation and image background: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist_rotation_back_image_new.zip
+rect: discriminate between tall and wide rectangles (white on black): http://www.iro.umontreal.ca/~lisa/icml2007data/rectangles.zip
+rect-img: discriminate between tall and wide rectangular image on a different background image: http://www.iro.umontreal.ca/~lisa/icml2007data/rectangles_images.zip
