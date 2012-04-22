@@ -1,1 +1,5 @@
-We can put all code here
+The following Python libraries are required:
+
+http://www.lfd.uci.edu/~gohlke/pythonlibs/
+numpy
+matplotlib

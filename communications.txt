@@ -1,2 +1,3 @@
-A: Testing and setting up GIT (04/21/2012 1:36PM)
+A: https://github.com/ynd belongs to Yann N. Dauphin, one of the authors in papers we are referencing. One of his repositories has python code for the Contractive Autoencoder they present in the papers. I made a program that uses their code and runs it on MNIST, one of the datasets they use. To test the program, you will have to download the dataset at http://www.iro.umontreal.ca/~lisa/icml2007data/mnist.zip (unpacked = 750mb) and necessary libraries. Numpy (http://numpy.scipy.org/) and matplotlib (http://matplotlib.sourceforge.net/). Specify the path to the training program in main.py. Right now, I am using my laptop so I have it sampling the first 10 training images and then attempting to reconstruct the first image after training so it doesn't perform that well. Feel free to change this. (04/22/2012  11:30AM)
 A: Files and Directories are set up (04/21/2012 1:42PM)
+A: Testing and setting up GIT (04/21/2012 1:36PM)

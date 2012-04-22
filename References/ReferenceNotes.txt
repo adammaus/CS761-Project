@@ -32,9 +32,13 @@ http://stats.stackexchange.com/questions/14827/how-to-calculate-derivative-of-th
 
 Learning invariant features through local space contraction (Rifai et al. 2011)
 http://arxiv.org/pdf/1104.4153.pdf
+http://www.iro.umontreal.ca/~lisa/pointeurs/CAE_tech_report.pdf
 
 A Simple Algorithm for Nuclear Norm Regularized Problems
 http://www.icml2010.org/papers/196.pdf
 
 Manifold Tangent Classifier (uses Contractive Auto-Encoders)
 http://videolectures.net/nips2011_dauphin_manifold/
+
+GitHub CAE code by ynd
+https://github.com/ynd/cae.py

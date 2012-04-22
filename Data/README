@@ -1,3 +1,5 @@
+To save space on the repository, I linked to the datasets
+
 Rifai2011.pdf uses datasets from http://www.iro.umontreal.ca/~lisa/icml2007
 basic: smaller subset of MNIST: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist.zip
 rot: digits with added random rotation: http://www.iro.umontreal.ca/~lisa/icml2007data/mnist_rotation_new.zip
