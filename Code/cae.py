@@ -19,7 +19,7 @@ import sys
 import os
 import pdb
 import numpy
-
+from scipy.sparse import *
 
 class CAE(object):
     """
@@ -196,9 +196,12 @@ class CAE(object):
             
             """
             j = self.jacobian(x)
+            # 100 x 1024 x 784
+            # num_samples * hidden_nodes * (images dimensions)
             return (j**2).sum(2).sum(1).mean()
-
-        return _reconstruction_loss() + self.jacobi_penalty * _jacobi_loss()
+        # Adam: Removed the jacobi_loss because it forced
+        # a memory error. It didn't seem to affect error that much
+        return _reconstruction_loss() + self.jacobi_penalty #* _jacobi_loss()
     
     def _fit(self, x):
         """

@@ -6,15 +6,15 @@ import os.path
 
 # Adam Maus & Brian Nixon
 # CS761 Final Project
-# Updated: 2012-04-22
+# Updated: 2012-04-23
 
 # Path to the training file
 # For my windows system path = C:\Users\melon\Desktop\mnist\mnist_train.amat
 # os.path.expanduser(~melon) points to C:\Users\melon
 # For linux, I think it will point to your home directory
 training_file_name = os.path.expanduser('~melon') + "\Desktop\mnist\mnist_train.amat"
-num_epochs = 100
-sample_size = 10 # set to None to use the entire training set
+num_epochs = 5 # For 12,000 images, this takes ~20 minutes to run
+sample_size = 12000 # set to None to use the entire training set
 
 # .amat files have a digit stored in a vector on one line.
 # the label is the last value in the vector
@@ -45,7 +45,7 @@ def read_amat_file(file_name, sample_size=None):
 
 [X, Y] = read_amat_file(training_file_name, sample_size)
 
-ae = CAE(epochs=num_epochs)
+ae = CAE(epochs=num_epochs, n_hiddens=1024)
 ae.fit(X, True)
 
 r_X = ae.reconstruct(X[0])
