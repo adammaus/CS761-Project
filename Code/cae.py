@@ -19,7 +19,8 @@ import sys
 import os
 import pdb
 import numpy
-from scipy.sparse import *
+from cae_save import CAE_Save
+#from scipy.sparse import *
 
 class CAE(object):
     """
@@ -201,7 +202,8 @@ class CAE(object):
             return (j**2).sum(2).sum(1).mean()
         # Adam: Removed the jacobi_loss because it forced
         # a memory error. It didn't seem to affect error that much
-        return _reconstruction_loss() + self.jacobi_penalty #* _jacobi_loss()
+        # Adam: Removing jacobi_loss ends up removing the power of CAE
+        return _reconstruction_loss() + self.jacobi_penalty * _jacobi_loss()
     
     def _fit(self, x):
         """
@@ -278,6 +280,9 @@ class CAE(object):
         numpy.random.shuffle(inds)
         
         n_batches = len(inds) / self.batch_size
+
+        # Construct a cae_save object
+        save_cae = CAE_Save('results.png', 'results')
         
         for epoch in range(self.epochs):
             for minibatch in range(n_batches):
@@ -288,6 +293,10 @@ class CAE(object):
                 sys.stdout.flush()
                 print "Epoch %d, Loss = %.2f" % (epoch, loss)
 
+                target = numpy.reshape(X[0], (28,-1))
+                reconstruction = numpy.reshape(self.reconstruct(X[0]), (28,-1))
+                save_cae.save_fig(target, reconstruction)
+                save_cae.save_cae(self.W, self.c, self.b)
 
 def main():
     pass
