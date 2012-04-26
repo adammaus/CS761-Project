@@ -20,7 +20,6 @@ import os
 import pdb
 import numpy
 from cae_save import CAE_Save
-#from scipy.sparse import *
 
 class CAE(object):
     """
@@ -190,6 +189,37 @@ class CAE(object):
             return (- (x * numpy.log(z) + (1 - x) * numpy.log(1 - z)).sum(1)).mean()
 
         def _jacobi_loss():
+            # To see how close the Schatten Norm (p=2) approximates
+            # the Frobenius norm, uncomment the next two lines.
+            # Mathematically, they should be equal but the I
+            # think Numpy makes an approximation of the singular values
+            # during decomposition so we run into the differences in values
+            # For more information, see
+            # http://scicomp.stackexchange.com/questions/1861/understanding-how-numpy-does-svd
+            # The Schatten Norm has the additional benefit that we don't
+            # run into as many memory errors 
+            #print "S", _schatten(2)**2
+            #print "F", _frobenius()
+            return _schatten(2)
+        
+        def _schatten(p):
+            ex_s_norms = []
+            j = self.jacobian(x)
+            for example in j:
+                s = numpy.linalg.svd(example, 1, 0)
+                s_norm = _pnorm(p, s)
+                ex_s_norms.append(s_norm)
+            return numpy.average(ex_s_norms)
+    
+        def _pnorm(p, vect):
+            if p == "inf":
+                return max(vect)
+            summ = 0
+            for x in vect:
+                summ += x**p
+            return summ ** (1.0/float(p))
+        
+        def _frobenius():
             """
             Computes the error of the model with respect
             
@@ -198,11 +228,10 @@ class CAE(object):
             """
             j = self.jacobian(x)
             # 100 x 1024 x 784
-            # num_samples * hidden_nodes * (images dimensions)
+            # size of j = num_samples * hidden_nodes * (images dimensions)
             return (j**2).sum(2).sum(1).mean()
-        # Adam: Removed the jacobi_loss because it forced
-        # a memory error. It didn't seem to affect error that much
-        # Adam: Removing jacobi_loss ends up removing the power of CAE
+        
+        # Removing _jacobi_loss ends up removing the power of CAE
         return _reconstruction_loss() + self.jacobi_penalty * _jacobi_loss()
     
     def _fit(self, x):

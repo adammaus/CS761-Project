@@ -1,0 +1,18 @@
+"The eventual project report will be a 3-page NIPS style paper."
+
+Regularization of Contractive Auto-Encoders using the Schatten Norm
+
+Adam Maus (maus@cs.wisc.edu)
+Brian Nixon (nixon@cs.wisc.edu)
+
+Introduction
+Contractive Auto-encoders
+Schatten Norm (if we have enough material)
+Experiments 
+Based off of Rifai2011
+1) 	Table with following headers:
+	Data Set, CAE (frobenius norm), CAE (schatten norm p=1), CAE (schatten norm p=inf)
+	Data Sets: basic, rot, bg-rand, bg-img, bg-img-rot, rect, rect-img
+2)	Contraction Curves
+3)	Average spectrum of the Encoder's Jacobian,
+Conclusions

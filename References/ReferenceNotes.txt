@@ -2,6 +2,8 @@ Contractive Auto-Encoders: Explicit Invariance During Feature Extraction
 http://techtalks.tv/talks/contractive-auto-encoders-explicit-invariance-during-feature-extraction/54426/
 http://www.icml-2011.org/papers/455_icmlpaper.pdf
 
+- A good description is that the term is the Schatten Norm of the Representation of the CAE not the Schatten Norm of the Reconstruction
+
 Adam's Notes
 - Explanation of Jacobian portion at 4:00
 - Want same representation for small changes to the training points through an invariant hidden layer.

@@ -11,14 +11,16 @@ import os.path
 # Path to the training file
 # For my windows system path = C:\Users\melon\Desktop\mnist\mnist_train.amat
 # os.path.expanduser(~melon) points to C:\Users\melon
-# For linux, I think it will point to your home directory
+# For linux, I think it will point to your home direcatory
 training_file_name = os.path.expanduser('~melon') + "\Desktop\mnist\mnist_train.amat"
-num_epochs = 100 # For 12,000 images, this takes ~20 minutes to run (if you remove the jacobi_loss term)
-sample_size = 85 # set to None to use the entire trainingset
+num_epochs = 1 # For 12,000 images, this takes ~20 minutes to run (if you remove the jacobi_loss term)
+sample_size = 125 # set to None to use the entire training set
+num_hidden_units = 1024
 
 # An image of the first training point alongside its reconstruction
 # will be created and saved to this file
-show_result = False
+show_result = True
+# If save_result_filename == None or "" then we don't save an image
 save_result_filename = "result"
 # Append the datetime to the save_result_filename
 import datetime
