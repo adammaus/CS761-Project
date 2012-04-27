@@ -324,10 +324,23 @@ class CAE(object):
                 sys.stdout.flush()
                 print "Epoch %d, Loss = %.2f" % (epoch, loss)
 
-                target = numpy.reshape(X[0], (28,-1))
-                reconstruction = numpy.reshape(self.reconstruct(X[0]), (28,-1))
-                save_cae.save_fig(target, reconstruction)
-                save_cae.save_cae(self.W, self.c, self.b)
+            # Save the cae weights in a file
+            save_cae.save_cae( self.W,
+                               self.c,
+                               self.b,
+                               self.n_hiddens,
+                               self.learning_rate,
+                               self.jacobi_penalty,
+                               self.batch_size,
+                               self.epochs,
+                               self.schatten_p,
+                               X )
+            # For MNIST data, this works, for other data
+            # we will have to save the figure a different way
+            target = numpy.reshape(X[0], (28,-1))
+            reconstruction = numpy.reshape(self.reconstruct(X[0]), (28,-1))
+            save_cae.save_fig(target, reconstruction)
+                
 
 def main():
     pass

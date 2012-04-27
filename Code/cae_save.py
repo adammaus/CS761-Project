@@ -20,9 +20,27 @@ class CAE_Save(object):
     grid[1].imshow(reconstruction)
     plt.savefig(self.save_fig_name)
     
-  def save_cae(self, W, c, b):
+  def save_cae(self,
+               W,
+               c,
+               b,
+               n_hidden,
+               learning_rate,
+               jacobi_penalty,
+               batch_size,
+               epochs,
+               schatten_p,
+               X ):
     # Output the CAE to a file
-    numpy.savez(self.save_cae_name, W, c, b)
+    CAE_params = numpy.array([n_hidden,
+               learning_rate,
+               jacobi_penalty,
+               batch_size,
+               epochs,
+               schatten_p])
+    # Save the training data used in X
+    numpy.savez(self.save_cae_name,
+                W=W, c=c, b=b, CAE_params=CAE_params, X=X)
 
 def main():
     pass
