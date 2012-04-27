@@ -1,3 +1,7 @@
+---------------------
+Primary References
+---------------------
+
 Contractive Auto-Encoders: Explicit Invariance During Feature Extraction
 http://techtalks.tv/talks/contractive-auto-encoders-explicit-invariance-during-feature-extraction/54426/
 http://www.icml-2011.org/papers/455_icmlpaper.pdf
@@ -29,18 +33,36 @@ Adam's Notes
 - local charts and atlas using first few singular values of the Jacobian helps to define the manifold
 - Data Sets: Writers Corpus, CIFAR-10, and MNIST, rot, bg-img, rect
 
-Random Other Resources that Adam found:
-http://stats.stackexchange.com/questions/14827/how-to-calculate-derivative-of-the-contractive-auto-encoder-regularization-term
+Manifold Tangent Classifier (uses Contractive Auto-Encoders)
+http://videolectures.net/nips2011_dauphin_manifold/
+
+---------------------
+Secondary References
+---------------------
+
+Efficient sparse coding algorithms
+http://ai.stanford.edu/~hllee/nips06-sparsecoding.pdf
+- Sparse coding provides a class of algorithms for finding succinct representations of stimuli; given only unlabeled input data, it learns basis functions that capture higher-level features in the data.
+- The goal of sparse coding is to represent input vectors approximately as a weighted linear combination of a small number of (unknown) "basis vectors."
+- In this paper, we present efficient sparse coding algorithms that are based on iteratively solving two convex optimization problems: an L1-regularized least squares problem and an L2-constrained least squares problem.
 
 Learning invariant features through local space contraction (Rifai et al. 2011)
 http://arxiv.org/pdf/1104.4153.pdf
 http://www.iro.umontreal.ca/~lisa/pointeurs/CAE_tech_report.pdf
 
-A Simple Algorithm for Nuclear Norm Regularized Problems
-http://www.icml2010.org/papers/196.pdf
+Learning Invariant Features through Topographic Filter Maps
+http://yann.lecun.com/exdb/publis/pdf/koray-cvpr-09.pdf
+- Pulled directly from the paper: It is well established that sparse coding algorithms applied to natural images learn basis functions that are localized oriented edges and resemble the receptive fields of simple cells in area V1 of the mammalian visual cortex [19]. These methods produce feature representation that are sparse, but not invariant. If the input pattern is slightly distorted, the representation may change drastically. Moreover, these features represent information about local texture, and hence, are rather inefficient when used to preprocess whole images because they do not exploit the redundancy in adjacent image patches. Finally, most sparse coding algorithms [19, 14, 17, 24, 4] have found limited applications in vision due to the high computational cost of the iterative optimization required to compute the feature descriptor.
+- Automatically learn locally-invariant feature descriptors from in an unsupervised manner. Sparse coding can be applied to natural images to learn basis functions that are localized oriented edges. Introduces Invariant Predictive Sparse Decomposition learns invariance and produces efficient representations of data.
 
-Manifold Tangent Classifier (uses Contractive Auto-Encoders)
-http://videolectures.net/nips2011_dauphin_manifold/
+Reducing the Dimensionality of Data with Neural Networks
+http://www.cs.toronto.edu/~hinton/science.pdf
+
+---------------------
+Other Resources
+---------------------
+
+http://stats.stackexchange.com/questions/14827/how-to-calculate-derivative-of-the-contractive-auto-encoder-regularization-term
 
 GitHub CAE code by ynd
 https://github.com/ynd/cae.py

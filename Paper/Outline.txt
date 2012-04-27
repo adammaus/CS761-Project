@@ -1,18 +1,58 @@
-"The eventual project report will be a 3-page NIPS style paper."
+"The eventual project report will be a 3-page NIPS style paper." (Piazza)
 
 Regularization of Contractive Auto-Encoders using the Schatten Norm
 
 Adam Maus (maus@cs.wisc.edu)
 Brian Nixon (nixon@cs.wisc.edu)
 
+--------------
+Abstract
+--------------
+
+--------------
 Introduction
+--------------
+
+--------------
+Related Work
+--------------
+Manifold Charting
+* Brand2003: Charting Manifolds by soft partitioning the data into locally linear low-dimensional neighborhoods before computing the connection that gives the global low dimensional embedding using a Gaussian Mixture Model
+
+Sparse Coding
+* Kavukcuoglu2009: Learning Invariant Features through Topographic Filter Maps: Automatically learn locally-invariant feature descriptors from in an unsupervised manner. Sparse coding can be applied to natural images to learn basis functions that are localized oriented edges. Introduces Invariant Predictive Sparse Decomposition learns invariance and produces efficient representations of data.
+* Lee2007: Efficient sparse coding algorithms: Sparse coding provides a class of algorithms for finding succinct representations of stimuli; given
+only unlabeled input data, it learns basis functions that capture higher-level features in the data. Efficient sparse coding algorithms that are based on iteratively solving two convex optimization problems: an L1-regularized least squares problem and an L2-constrained least squares problem.
+
+Local Coordinate Coding
+* Yu2009: Nonlinear Learning using Local Coordinate Coding: The manifold is locally approximated by a linear combination of a data point x's nearby anchor points. The linear weights are the local coordinate coding. Locally embed points on a manifold for a lower dimensional space and expressed as coordinates with respect to a set of anchor points. A nonlinear function is approximated by a linear function.
+* Yu2010: Improved Local Coordinate Coding using Local Tangents: Extends Local Coordinate Coding by including local tangent directions through quadratic approximation terms.
+
+Nonlinear Dimensionality Reduction using Neural Network
+* Hinton2006: Reducing the dimensionality of data with neural networks: 
+
+
+--------------
 Contractive Auto-encoders
+--------------
+
+--------------
 Schatten Norm (if we have enough material)
+--------------
+Computational Complexity (both runtime and space)
+- I am having a lot of trouble using the Python code because I am limited by the size of the Jacobian
+- Numpy's SVD uses GESDD from LAPACK. http://scicomp.stackexchange.com/questions/1861/understanding-how-numpy-does-svd
+
+--------------
 Experiments 
-Based off of Rifai2011
+--------------
+Based off of Rifai2011-ICML-CAE
 1) 	Table with following headers:
 	Data Set, CAE (frobenius norm), CAE (schatten norm p=1), CAE (schatten norm p=inf)
 	Data Sets: basic, rot, bg-rand, bg-img, bg-img-rot, rect, rect-img
 2)	Contraction Curves
-3)	Average spectrum of the Encoder's Jacobian,
+3)	Singular values of the Encoder's Jacobian
+
+--------------
 Conclusions
+--------------
