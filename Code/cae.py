@@ -34,7 +34,8 @@ class CAE(object):
                  learning_rate=0.001,
                  jacobi_penalty=0.1,
                  batch_size=10,
-                 epochs=200):
+                 epochs=200,
+                 schatten_p=2):
         """
         Initialize a CAE.
         
@@ -67,6 +68,7 @@ class CAE(object):
         self.jacobi_penalty = jacobi_penalty
         self.batch_size = batch_size
         self.epochs = epochs
+        self.schatten_p = schatten_p
     
     def _sigmoid(self, x):
         """
@@ -200,7 +202,7 @@ class CAE(object):
             # run into as many memory errors 
             #print "S", _schatten(2)**2
             #print "F", _frobenius()
-            return _schatten(2)
+            return _schatten(self.schatten_p)
         
         def _schatten(p):
             ex_s_norms = []

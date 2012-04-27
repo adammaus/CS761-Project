@@ -6,7 +6,7 @@ import os.path
 
 # Adam Maus & Brian Nixon
 # CS761 Final Project
-# Updated: 2012-04-24
+# Updated: 2012-04-27
 
 # Path to the training file
 # For my windows system path = C:\Users\melon\Desktop\mnist\mnist_train.amat
@@ -14,8 +14,9 @@ import os.path
 # For linux, I think it will point to your home direcatory
 training_file_name = os.path.expanduser('~melon') + "\Desktop\mnist\mnist_train.amat"
 num_epochs = 100 # For 12,000 images, this takes ~20 minutes to run (if you remove the jacobi_loss term)
-sample_size = 125 # set to None to use the entire training set
+sample_size = 10 # set to None to use the entire training set
 num_hidden_units = 1024
+schatten_p_value = 1 # if you want to use infinity, use schatten_p_value = "inf"
 
 # An image of the first training point alongside its reconstruction
 # will be created and saved to this file
@@ -58,7 +59,7 @@ def read_amat_file(file_name, sample_size=None):
 
 [X, Y] = read_amat_file(training_file_name, sample_size)
 
-ae = CAE(epochs=num_epochs, n_hiddens=1024)
+ae = CAE(epochs=num_epochs, n_hiddens=1024, schatten_p = schatten_p_value)
 ae.fit(X, True)
 
 r_X = ae.reconstruct(X[0])
