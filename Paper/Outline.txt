@@ -28,13 +28,15 @@ Local Coordinate Coding
 * Yu2009: Nonlinear Learning using Local Coordinate Coding: The manifold is locally approximated by a linear combination of a data point x's nearby anchor points. The linear weights are the local coordinate coding. Locally embed points on a manifold for a lower dimensional space and expressed as coordinates with respect to a set of anchor points. A nonlinear function is approximated by a linear function.
 * Yu2010: Improved Local Coordinate Coding using Local Tangents: Extends Local Coordinate Coding by including local tangent directions through quadratic approximation terms.
 
-Nonlinear Dimensionality Reduction using Neural Network
-* Hinton2006: Reducing the dimensionality of data with neural networks: 
+Nonlinear Dimensionality Reduction using Neural Networks (Autoencoders)
+* Hinton2006: Reducing the dimensionality of data with neural networks: Introduces autoencoder 
 
-
+Other Manifold Learning methods see: http://www.postech.ac.kr/~seungjin/courses/dr/handouts/list.pdf
 --------------
 Contractive Auto-encoders
 --------------
+- CAE can be used to do unsupervised learning of a robust representation of the data
+- Used to initialize an multi-layer preceptron
 
 --------------
 Schatten Norm (if we have enough material)
@@ -52,6 +54,9 @@ Based off of Rifai2011-ICML-CAE
 	Data Sets: basic, rot, bg-rand, bg-img, bg-img-rot, rect, rect-img
 2)	Contraction Curves
 3)	Singular values of the Encoder's Jacobian
+
+Figures:
+We could show a visualization for an image dataset from the CAE using different p's using the CAE's top n singular values.
 
 --------------
 Conclusions

@@ -7,8 +7,9 @@ http://techtalks.tv/talks/contractive-auto-encoders-explicit-invariance-during-f
 http://www.icml-2011.org/papers/455_icmlpaper.pdf
 
 - A good description is that the term is the Schatten Norm of the Representation of the CAE not the Schatten Norm of the Reconstruction
+- Pulled from Paper: We hypothesize that whereas the proposed penalty term encourages the learned features to be locally invariant without any preference for particular directions, when it is combined with a reconstruction error or likelihood criterion we obtain invariance in the directions that make sense in the context of the given training data, i.e., the variations that are present in the data should also be captured in the learned representation, but the other directions may be contracted in the learned representation.
 
-Adam's Notes
+Notes on Video
 - Explanation of Jacobian portion at 4:00
 - Want same representation for small changes to the training points through an invariant hidden layer.
 - Lower jacobian norm correlates with better generalization error
@@ -18,7 +19,7 @@ Higher Order Contractive Auto-Encoder
 http://videolectures.net/ecmlpkdd2011_rifai_contractive/
 http://www.iro.umontreal.ca/~vincentp/Publications/CAE_H_ECML2011.pdf
 
-Adam's Notes
+Notes on Video
 - Auto-encoder is a encoder and a decoder.
 - learns efficient representations by trying to reconstruct data
 - Train an AE using a cost function which is the reconstruction mean square error
@@ -57,6 +58,7 @@ http://yann.lecun.com/exdb/publis/pdf/koray-cvpr-09.pdf
 
 Reducing the Dimensionality of Data with Neural Networks
 http://www.cs.toronto.edu/~hinton/science.pdf
+- Introduces Autoencoders
 
 ---------------------
 Other Resources
