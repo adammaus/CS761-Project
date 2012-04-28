@@ -11,6 +11,7 @@ http://www.icml-2011.org/papers/455_icmlpaper.pdf
 
 Notes on Video
 - Explanation of Jacobian portion at 4:00
+- Encourages invariance of the hidden layer to small changes in the input around training samples.
 - Want same representation for small changes to the training points through an invariant hidden layer.
 - Lower jacobian norm correlates with better generalization error
 - Possibly compare to stacked contractive auto-encoders. Invariance increases as more stacking. Further radii map to the same representation.

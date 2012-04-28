@@ -23,3 +23,12 @@ def read_amat_file(file_name, sample_size=None):
       Y.append(x_flo_arr[len(x_flo_arr)-1])
   del temp_arr # Force garbage collection
   return [numpy.array(X), numpy.array(Y)]
+
+def pnorm(p, vect):
+  if p == "inf":
+    return max(vect)
+  summ = 0
+  for x in vect:
+    summ += x**p
+  return summ ** (1.0/float(p))
+  

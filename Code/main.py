@@ -16,7 +16,7 @@ from helper_functions import *
 # For linux, I think it will point to your home direcatory
 training_file_name = os.path.expanduser('~melon') + "\Desktop\mnist\mnist_train.amat"
 num_epochs = 100 # For 12,000 images, this takes ~20 minutes to run (if you remove the jacobi_loss term)
-sample_size = 10 # set to None to use the entire training set
+sample_size = 125 # set to None to use the entire training set
 num_hidden_units = 1024
 schatten_p_value = 1 # if you want to use infinity, use schatten_p_value = "inf"
 
