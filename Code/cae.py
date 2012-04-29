@@ -118,7 +118,7 @@ class CAE(object):
         Parameters
         ----------
         x: array-like, shape (n_examples, n_inputs)
-        
+    hen     
         Returns
         -------
         x_new: array-like, shape (n_examples, n_inputs)
