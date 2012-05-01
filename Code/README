@@ -1,5 +1,7 @@
 The following Python libraries are required:
 
+numpy: http://numpy.scipy.org/
+matplotlib: http://matplotlib.sourceforge.net/
+
+If you have a Windows machine, look at for a listing of different Python libraries:
 http://www.lfd.uci.edu/~gohlke/pythonlibs/
-numpy
-matplotlib
