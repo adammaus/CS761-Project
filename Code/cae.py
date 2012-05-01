@@ -33,9 +33,10 @@ class CAE(object):
                  b=None,
                  learning_rate=0.001,
                  jacobi_penalty=0.1,
-                 batch_size=10,
+                 batch_size=1, # Changed from 10 to 1 because it was computationally expensive
                  epochs=200,
-                 schatten_p=2):
+                 schatten_p=2,
+                 save_results_file="results"):
         """
         Initialize a CAE.
         
@@ -69,6 +70,7 @@ class CAE(object):
         self.batch_size = batch_size
         self.epochs = epochs
         self.schatten_p = schatten_p
+        self.save_results_file = save_results_file
     
     def _sigmoid(self, x):
         """
@@ -205,12 +207,19 @@ class CAE(object):
             return _schatten(self.schatten_p)
         
         def _schatten(p):
+            # This is the most costly loop
             ex_s_norms = []
-            j = self.jacobian(x)
-            for example in j:
-                s = numpy.linalg.svd(example, 1, 0)
-                s_norm = _pnorm(p, s)
-                ex_s_norms.append(s_norm)
+            for sample in x:
+            	j = self.jacobian(numpy.array([sample]))
+            	s = numpy.linalg.svd(j[0,:,:], 1, 0)
+            	s_norm = _pnorm(p, s)
+            	ex_s_norms.append(s_norm)
+            # Old Method
+            #j = self.jacobian(x)
+            #for example in js:
+            #    s = numpy.linalg.svd(example, 1, 0)
+            #    s_norm = _pnorm(p, s)
+            #    ex_s_norms.append(s_norm)
             return numpy.average(ex_s_norms)
     
         def _pnorm(p, vect):
@@ -305,22 +314,22 @@ class CAE(object):
                 size=(X.shape[1], self.n_hiddens))
             self.c = numpy.zeros(self.n_hiddens)
             self.b = numpy.zeros(X.shape[1])
-        
+        #print "W constructed"
         inds = range(X.shape[0])
-        
         numpy.random.shuffle(inds)
-        
+        #print "Training Points shuffled"
         n_batches = len(inds) / self.batch_size
-
-        # Construct a cae_save object
-        save_cae = CAE_Save('results.png', 'results')
         
         for epoch in range(self.epochs):
+            # Construct a cae_save object
+            save_cae = CAE_Save(self.save_results_file + '.png', self.save_results_file)
+            
+            #print "Running mini-batch"
             for minibatch in range(n_batches):
                 self._fit(X[inds[minibatch::n_batches]])
-            
+            #print "Running loss calculation"
+            loss = self.loss(X).mean()
             if verbose:
-                loss = self.loss(X).mean()
                 sys.stdout.flush()
                 print "Epoch %d, Loss = %.2f" % (epoch, loss)
 
@@ -334,12 +343,16 @@ class CAE(object):
                                self.batch_size,
                                self.epochs,
                                self.schatten_p,
+                               loss,
                                X )
             # For MNIST data, this works, for other data
             # we will have to save the figure a different way
             target = numpy.reshape(X[0], (28,-1))
             reconstruction = numpy.reshape(self.reconstruct(X[0]), (28,-1))
             save_cae.save_fig(target, reconstruction)
+            del save_cae
+            del target
+            del reconstruction
                 
 
 def main():

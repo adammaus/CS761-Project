@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 
 # Parameters
-numpy_array_filename = "results.npz"
+numpy_array_filename = "result-1-250-2012-4-30-1849.png.npz"
 training_file_name = os.path.expanduser('~melon') + "\Desktop\mnist\mnist_train.amat"
 
 # Read the numpy array file
@@ -31,7 +31,7 @@ W = data['W']
 c = data['c']
 b = data['b']
 CAE_params = data['CAE_params']
-[n_hidden,learning_rate,jacobi_penalty,batch_size,epochs,schatten_p] = CAE_params
+[n_hidden,learning_rate,jacobi_penalty,batch_size,epochs,schatten_p, loss] = CAE_params
 X = data['X'] # The examples used during cae.fit
 
 # Load the data into a CAE
