@@ -3,38 +3,20 @@
 %\documentstyle[nips12submit_09,times,art10]{article} % For LaTeX 2.09
 
 
-\title{Formatting Instructions for NIPS 2012}
-
+\title{Regularization of Contractive Autoencoders using the Schatten Norm}
 
 \author{
-David S.~Hippocampus\thanks{ Use footnote for providing further information
-about author (webpage, alternative address)---\emph{not} for acknowledging
-funding agencies.} \\
-Department of Computer Science\\
-Cranberry-Lemon University\\
-Pittsburgh, PA 15213 \\
-\texttt{hippo@cs.cranberry-lemon.edu} \\
+Adam Maus \\ 
+Department of Computer Sciences \\
+University of Wisconsin - Madison \\
+Madison, WI 53706 \\
+\texttt{maus@cs.wisc.edu} \\
 \And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\AND
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-(if needed)\\
+Brian Nixon \\
+Department of Computer Sciences \\
+University of Wisconsin - Madison \\
+Madison, WI 53706 \\
+\texttt{nixon@cs.wisc.edu} \\
 }
 
 % The \author macro works with any number of authors. There are two commands
@@ -48,7 +30,7 @@ Address \\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-%\nipsfinalcopy % Uncomment for camera-ready version
+\nipsfinalcopy % Uncomment for camera-ready version
 
 \begin{document}
 
@@ -56,156 +38,38 @@ Address \\
 \maketitle
 
 \begin{abstract}
-The abstract paragraph should be indented 1/2~inch (3~picas) on both left and
-right-hand margins. Use 10~point type, with a vertical spacing of 11~points.
-The word \textbf{Abstract} must be centered, bold, and in point size 12. Two
-line spaces precede the abstract. The abstract must be limited to one
-paragraph.
+Contractive autoencoders have been used in unsupervised learning to learn a useful representation of data that minimizes reconstruction error and captures manifold structure through regularization by the Frobenius norm. We study a more general contractive autoencoder by replacing the Frobenius norm with the Schatten norm. The Schatten norm is a matrix norm that is equivalent to the $p$-norm of the singular values of a matrix while the Forbenius norm is a special case of the Schatten Norm with $p$ = 2. We show that using this penalty with $p$ = 1 results in greater contraction in the hidden layer of the autoencoder but tends to produce less accurate reconstruction.
 \end{abstract}
 
-\section{Submission of papers to NIPS 2012}
+\section{Introduction}
 
-NIPS requires electronic submissions.  The electronic submission site is  
-\begin{center}
-   http://papers.nips.cc
-\end{center}
+Algorithms that learn useful low-dimensional representations of high-dimensional data automatically have recently garnered attention because of their application in deep learning [Bengio 2009], manifold learning [Tenenbaum 2000, Roweis 2000], initialization of state-of-art classifiers [Bengio 2007], Deep Belief Networks [Hinton 2006 - Neural Comp], and Deep Boltzmann Machines [Salakhutdinov 2009]. 
 
-Please read carefully the
-instructions below, and follow them faithfully.
-\subsection{Style}
+Autoencoders are multilayer neural networks that can be used to learn low-dimensional codes of data [Hinton 1995, Hinton 2006]. Autoencoder applications include hand-written character and image recognition [Tan 2010], novelty assessment [Thompson 2002], and data visualization [Nadjarpoorsiyahkaly 2011]. Other types of autoencoders have been introduced that focus on smaller weights and robustness to noise. To encourage smaller weights and weight decay, a penalty term is added to the loss function that requires the sum of the weight values to be as small as possible [Kavukcuoglu 2009, Lee 2008]. Denoising autoencoders encourage invariance by first corrupting the input with noise and then trying to learn the uncorrupted form [Vincent 2010]. 
 
-Papers to be submitted to NIPS 2012 must be prepared according to the
-instructions presented here. Papers may be only up to eight pages long,
-including figures. Since 2009 an additional ninth page \textit{containing only
-cited references} is allowed. Papers that exceed nine pages will not be
-reviewed, or in any other way considered for presentation at the conference.
-%This is a strict upper bound. 
+The traditional autoencoder with $h$ hidden nodes trained on $n$ points with $d$ dimensions has the following encoding function, $e(x) = f_1(Wx + b_1) $ and decoding function, $d(x) = f_2(W^{T} e(x) + b_2) $, where the activation functions $f_1(x)$, $f_2(x)$ take the form of the sigmoid function $\frac{1}{1 + e^{-x}}$ in this study. $f_2(x)$ may also be a linear activation function depending on the application. $W$ is a matrix of real numbers of size $h$ x $d$, $b_1$ and $b_2$ are bias vectors of real numbers of size $h$ and $d$, respectively.
 
-Please note that this year we have introduced automatic line number generation
-into the style file (for \LaTeXe and Word versions). This is to help reviewers
-refer to specific lines of the paper when they make their comments. Please do
-NOT refer to these line numbers in your paper as they will be removed from the
-style file for the final version of accepted papers.
+\section{Contractive Autoencoders (CAE)}
 
-The margins in 2012 are the same as since 2007, which allow for $\approx 15\%$
-more words in the paper compared to earlier years. We are also again using 
-double-blind reviewing. Both of these require the use of new style files.
+Contractive autoencoders introduced by Rifai et al. [Rifai 2011] are similar in spirit to autoencoders with weight decay. The contractive autoencoder objective function is $L(W, b_1, b_2) = \sum^n_i{ || x_i - d(e(x_i)) ||^2 } + \lambda || J_e (x_i) ||_{S_p} $ where $|| Y ||_{S_p}$ represents the Schatten norm of $Y$ with a value of $p$. Rifai et al. use the Schatten norm with $p=2$ also known as the Frobenius norm of the Jacobian of the nonlinear encoding function: $ J_{e}(x_i) = \partial e(x_i) / \partial x_i$. Through this regularization, contractive autoencoders encourage a sparse represenation of the data that is also locally invariant. The goal of CAEs is to minimize the reconstruction error as well as the contraction around each of the training points. The contraction is maximized in directions orthogonal to the manifold so representations change very little in these directions while parallel directions have the most change in representation. 
 
-Authors are required to use the NIPS \LaTeX{} style files obtainable at the
-NIPS website as indicated below. Please make sure you use the current files and
-not previous versions. Tweaking the style files may be grounds for rejection.
-
-%% \subsection{Double-blind reviewing}
-
-%% This year we are doing double-blind reviewing: the reviewers will not know 
-%% who the authors of the paper are. For submission, the NIPS style file will 
-%% automatically anonymize the author list at the beginning of the paper.
-
-%% Please write your paper in such a way to preserve anonymity. Refer to
-%% previous work by the author(s) in the third person, rather than first
-%% person. Do not provide Web links to supporting material at an identifiable
-%% web site.
-
-%%\subsection{Electronic submission}
-%%
-%% \textbf{THE SUBMISSION DEADLINE IS JUNE 1, 2012. SUBMISSIONS MUST BE LOGGED BY
-%% 23:00, JUNE 1, 2012, UNIVERSAL TIME}
-
-%% You must enter your submission in the electronic submission form available at
-%% the NIPS website listed above. You will be asked to enter paper title, name of
-%% all authors, keyword(s), and data about the contact
-%% author (name, full address, telephone, fax, and email). You will need to
-%% upload an electronic (postscript or pdf) version of your paper.
-
-%% You can upload more than one version of your paper, until the
-%% submission deadline. We strongly recommended uploading your paper in
-%% advance of the deadline, so you can avoid last-minute server congestion.
-%%
-%% Note that your submission is only valid if you get an e-mail
-%% confirmation from the server. If you do not get such an e-mail, please
-%% try uploading again. 
+CAEs learn deep representations of the data that are also robust to variations in the data by using an overcomplete representation and including the Jacobian penalty term. An overcomplete representation can be illustrated by choosing more hidden nodes than dimensions allowing an autoencoder multiple complete and perfect reconstructions. In a CAE, the additional Jacobian penalty term chooses reconstructions that are robust to small changes to the data and learns the manifold's tangent directions. It is through this overcomplete representation that a deeper understanding of the data can be found than in a traditional autoencoder. It should also be noted, that the jacobian penalty term is not limited to autoencoders and other models could benefit by minimizing the contractive penalty term.
 
 
-\subsection{Retrieval of style files}
 
-The style files for NIPS and other conference information are available on the World Wide Web at
-\begin{center}
-   http://www.nips.cc/
-\end{center}
-The file \verb+nips2012.pdf+ contains these 
-instructions and illustrates the
-various formatting requirements your NIPS paper must satisfy. \LaTeX{}
-users can choose between two style files:
-\verb+nips11submit_09.sty+ (to be used with \LaTeX{} version 2.09) and
-\verb+nips11submit_e.sty+ (to be used with \LaTeX{}2e). The file
-\verb+nips2012.tex+ may be used as a ``shell'' for writing your paper. All you
-have to do is replace the author, title, abstract, and text of the paper with
-your own. The file
-\verb+nips2012.rtf+ is provided as a shell for MS Word users.
+\subsection{Schatten Norm}
 
-The formatting instructions contained in these style files are summarized in
-sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
+\section{Experiments}
 
-%% \subsection{Keywords for paper submission}
-%% Your NIPS paper can be submitted with any of the following keywords (more than one keyword is possible for each paper):
+Training contractive autoencoders involves minimizing the $L(W, b_1, b_2)$. For these results, a gradient descent method was used to train the weights, $W$, $b_1$, and $b_2$.
 
-%% \begin{verbatim}
-%% Bioinformatics
-%% Biological Vision
-%% Brain Imaging and Brain Computer Interfacing
-%% Clustering
-%% Cognitive Science
-%% Control and Reinforcement Learning
-%% Dimensionality Reduction and Manifolds
-%% Feature Selection
-%% Gaussian Processes
-%% Graphical Models
-%% Hardware Technologies
-%% Kernels
-%% Learning Theory
-%% Machine Vision
-%% Margins and Boosting
-%% Neural Networks
-%% Neuroscience
-%% Other Algorithms and Architectures
-%% Other Applications
-%% Semi-supervised Learning
-%% Speech and Signal Processing
-%% Text and Language Applications
+We compare the performance of the CAE with varying $p$ using the basic MNIST dataset. After training the CAE on the first 400 samples taken from the dataset, the CAE was tested and compared by using a $k$ nearest neighbors classifier on the MNIST test data. The classifier was set up such that the trained CAE encoded each training point and each test point. For each encoded test point, the euclidean distance was computed between it and each training point. The $k$ closest neighbors voted on the label for the test point with ties were broken randomly using a uniform distribution.
 
-%% \end{verbatim}
 
-\section{General formatting instructions}
-\label{gen_inst}
 
-The text must be confined within a rectangle 5.5~inches (33~picas) wide and
-9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).
-Use 10~point type with a vertical spacing of 11~points. Times New Roman is the
-preferred typeface throughout. Paragraphs are separated by 1/2~line space,
-with no indentation.
+\section{Conclusions}
 
-Paper title is 17~point, initial caps/lower case, bold, centered between
-2~horizontal rules. Top rule is 4~points thick and bottom rule is 1~point
-thick. Allow 1/4~inch space above and below title to rules. All pages should
-start at 1~inch (6~picas) from the top of the page.
-
-%The version of the paper submitted for review should have ``Anonymous Author(s)'' as the author of the paper.
-
-For the final version, authors' names are
-set in boldface, and each name is centered above the corresponding
-address. The lead author's name is to be listed first (left-most), and
-the co-authors' names (if different address) are set to follow. If
-there is only one co-author, list both author and co-author side by side.
-
-Please pay special attention to the instructions in section \ref{others}
-regarding figures, tables, acknowledgments, and references.
-
-\section{Headings: first level}
-\label{headings}
-
-First level headings are lower case (except for first word and proper nouns),
-flush left, bold and in point size 12. One line space before the first level
-heading and 1/2~line space after the first level heading.
+%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Headings: second level}
 
@@ -303,121 +167,6 @@ In particular, do not modify the width or length of the rectangle the text
 should fit into, and do not change font sizes (except perhaps in the
 \textbf{References} section; see below). Please note that pages should be
 numbered.
-
-\section{Preparing PostScript or PDF files}
-
-Please prepare PostScript or PDF files with paper size ``US Letter'', and
-not, for example, ``A4''. The -t
-letter option on dvips will produce US Letter files.
-
-Fonts were the main cause of problems in the past years. Your PDF file must
-only contain Type 1 or Embedded TrueType fonts. Here are a few instructions
-to achieve this.
-
-\begin{itemize}
-
-\item You can check which fonts a PDF files uses.  In Acrobat Reader,
-select the menu Files$>$Document Properties$>$Fonts and select Show All Fonts. You can
-also use the program \verb+pdffonts+ which comes with \verb+xpdf+ and is
-available out-of-the-box on most Linux machines.
-
-\item The IEEE has recommendations for generating PDF files whose fonts
-are also acceptable for NIPS. Please see
-http://www.emfield.org/icuwb2010/downloads/IEEE-PDF-SpecV32.pdf
-
-\item LaTeX users:
-
-\begin{itemize}
-
-\item Consider directly generating PDF files using \verb+pdflatex+
-(especially if you are a MiKTeX user). 
-PDF figures must be substituted for EPS figures, however.
-
-\item Otherwise, please generate your PostScript and PDF files with the following commands:
-\begin{verbatim} 
-dvips mypaper.dvi -t letter -Ppdf -G0 -o mypaper.ps
-ps2pdf mypaper.ps mypaper.pdf
-\end{verbatim}
-
-Check that the PDF files only contains Type 1 fonts. 
-%For the final version, please send us both the Postscript file and
-%the PDF file. 
-
-\item xfig "patterned" shapes are implemented with 
-bitmap fonts.  Use "solid" shapes instead. 
-\item The \verb+\bbold+ package almost always uses bitmap
-fonts.  You can try the equivalent AMS Fonts with command
-\begin{verbatim}
-\usepackage[psamsfonts]{amssymb}
-\end{verbatim}
- or use the following workaround for reals, natural and complex: 
-\begin{verbatim}
-\newcommand{\RR}{I\!\!R} %real numbers
-\newcommand{\Nat}{I\!\!N} %natural numbers 
-\newcommand{\CC}{I\!\!\!\!C} %complex numbers
-\end{verbatim}
-
-\item Sometimes the problematic fonts are used in figures
-included in LaTeX files. The ghostscript program \verb+eps2eps+ is the simplest
-way to clean such figures. For black and white figures, slightly better
-results can be achieved with program \verb+potrace+.
-\end{itemize}
-\item MSWord and Windows users (via PDF file):
-\begin{itemize}
-\item Install the Microsoft Save as PDF Office 2007 Add-in from
-http://www.microsoft.com/downloads/details.aspx?displaylang=en\&familyid=4d951911-3e7e-4ae6-b059-a2e79ed87041
-\item Select ``Save or Publish to PDF'' from the Office or File menu
-\end{itemize}
-\item MSWord and Mac OS X users (via PDF file):
-\begin{itemize}
-\item From the print menu, click the PDF drop-down box, and select ``Save
-as PDF...''
-\end{itemize}
-\item MSWord and Windows users (via PS file):
-\begin{itemize}
-\item To create a new printer
-on your computer, install the AdobePS printer driver and the Adobe Distiller PPD file from
-http://www.adobe.com/support/downloads/detail.jsp?ftpID=204 {\it Note:} You must reboot your PC after installing the
-AdobePS driver for it to take effect.
-\item To produce the ps file, select ``Print'' from the MS app, choose
-the installed AdobePS printer, click on ``Properties'', click on ``Advanced.''
-\item Set ``TrueType Font'' to be ``Download as Softfont''
-\item Open the ``PostScript Options'' folder
-\item Select ``PostScript Output Option'' to be ``Optimize for Portability''
-\item Select ``TrueType Font Download Option'' to be ``Outline''
-\item Select ``Send PostScript Error Handler'' to be ``No''
-\item Click ``OK'' three times, print your file.
-\item Now, use Adobe Acrobat Distiller or ps2pdf to create a PDF file from
-the PS file. In Acrobat, check the option ``Embed all fonts'' if
-applicable.
-\end{itemize}
-
-\end{itemize}
-If your file contains Type 3 fonts or non embedded TrueType fonts, we will
-ask you to fix it. 
-
-\subsection{Margins in LaTeX}
- 
-Most of the margin problems come from figures positioned by hand using
-\verb+\special+ or other commands. We suggest using the command
-\verb+\includegraphics+
-from the graphicx package. Always specify the figure width as a multiple of
-the line width as in the example below using .eps graphics
-\begin{verbatim}
-   \usepackage[dvips]{graphicx} ... 
-   \includegraphics[width=0.8\linewidth]{myfile.eps} 
-\end{verbatim}
-or % Apr 2009 addition
-\begin{verbatim}
-   \usepackage[pdftex]{graphicx} ... 
-   \includegraphics[width=0.8\linewidth]{myfile.pdf} 
-\end{verbatim}
-for .pdf graphics. 
-See section 4.4 in the graphics bundle documentation (http://www.ctan.org/tex-archive/macros/latex/required/graphics/grfguide.ps) 
- 
-A number of width problems arise when LaTeX cannot properly hyphenate a
-line. Please give LaTeX hyphenation hints using the \verb+\-+ command.
-
 
 \subsubsection*{Acknowledgments}
 
