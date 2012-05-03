@@ -33,6 +33,7 @@ class CAE_Save(object):
                batch_size,
                epochs,
                schatten_p,
+               loss,
                X ):
     # Output the CAE to a file
     CAE_params = numpy.array([n_hidden,
@@ -40,7 +41,8 @@ class CAE_Save(object):
                jacobi_penalty,
                batch_size,
                epochs,
-               schatten_p])
+               schatten_p,
+               loss])
     # Save the training data used in X
     numpy.savez(self.save_cae_name,
                 W=W, c=c, b=b, CAE_params=CAE_params, X=X)

@@ -1,6 +1,6 @@
 "The eventual project report will be a 3-page NIPS style paper." (Piazza)
 
-Regularization of Contractive Auto-Encoders using the Schatten Norm
+Regularization of contractive autoencoders using the Schatten norm
 
 Adam Maus (maus@cs.wisc.edu)
 Brian Nixon (nixon@cs.wisc.edu)
@@ -8,14 +8,33 @@ Brian Nixon (nixon@cs.wisc.edu)
 --------------
 Abstract
 --------------
+Contractive autoencoders have been used to perform unsupervised learning to learn a useful representation of data that minimizes reconstruction error and captures manifold structure through regularization by the Frobenius norm. We study a more general contractive autoencoder by replacing the Frobenius norm with the Schatten norm. The Schatten Norm is a matrix norm that is equivalent to the p-norm of the singular values of a matrix while the Forbenius norm is a special case of the Schatten Norm with p = 2. We show that using this penalty with p = 1 results in greater contraction in the hidden layer of the autoencoder but tends to produce less accurate reconstruction.
 
 --------------
 Introduction
 --------------
+Algorithms that learn useful low-dimensional representations of high-dimensional data automatically have recently garnered attention because of their application in deep learning [Bengio 2009], manifold learning [Tenenbaum 2000, Roweis 2000], initialization of state-of-art classifiers [Bengio 2007], Deep Belief Networks [Hinton 2006 - Neural Comp], and Deep Boltzmann Machines [Salakhutdinov 2009]. 
+
+Dimensionality reduction through manifold learning has involved manifold charting [Brand 2003], sparse coding [Lee 2007, Kavukcuoglu 2009], local coordinate coding [Yu 2009, Yu 2010], nonlinear PCA [Scholz 2005], and autoencoders [Hinton 2006].
+
+Autoencoders are multilayer neural networks that can be used to learn low-dimensional codes of data [Hinton 1995, Hinton 2006]. Autoencoder applications include hand-written character and image recognition [Tan 2010], novelty assessment [Thompson 2002], and data visualization [Nadjarpoorsiyahkaly 2011]. Other types of autoencoders have been introduced the focus on smaller weights and robustness to noise. To encourage smaller weights and weight decay, a penalty term is added to the loss function that requires the sum of the weight values to be as small as possible [Kavukcuoglu 2009, Lee 2008]. Denoising autoencoders encourage invariance by first corrupting the input with noise and then try to learn the uncorrupted form [Vincent 2010]. 
+
+Contractive autoencoders introduced by Rifai et al. [Rifai 2011] are similar in spirit to autoencoders with weight decay. The autoencoder's objective function has the reconstruction error and an added penalty term, the Frobenius norm of the Jacobian of the training points and weights of the autoencoder. Through this regularization, contractive autoencoders encourage a sparse represenation of the data that is also locally invariant and lacks a preference for particular directions. This autoencoder learns efficient representations of the data that are robust to variations in the data. We introduce an autoencoder that replaces the Frobenius norm with the more general Schatten norm. The Schatten norm is a matrix norm that consists of the p-norm of the singular values of a matrix. The Schatten norm with p = 1 yields the nuclear norm, the Frobenius norm is equivalent to the Schatten norm when p = 2, and p = infinity is called the spectral norm. The penalty term consists of the average of the Schatten norm of the Jacobians of the autoencoder's weights on a training set. 
+
+The goal of contractive autoencoders is to minimize the reconstruction error as well as the contraction around each of the training points. The contraction is maximized in directions orthogonal to the manifold so representations change very little in these directions while parallel directions have the most change in representation. The largest singular values of the Jacobian correspond to the directions in input space to which the representation is most sensitive.
+
+Once the autoencoder has learned a new representation of the data, a coordinate system can be produced by the hidden layer. Each data point maps to a particular low dimensional representation and represents a chart of the manifold at that point. In a contractive autoencoder with a minimized objective function, variations in the data map to the same representation and chart. These charts can be put together to form an atlas of the manifold and a global coordinate system.
+
+The runtime computational cost of calculating the Schatten norm is relatively inexpensive and limited by the complexity of singular value decomposition of the Jacobian for each weight and training point. The space complexity is expensive because the Jacobian for each training point and node in the hidden layer must be calculated and used in the singular value decomposition. The size of the Jacobian for a singular training point is equal to the number of hidden nodes multiplied by the number of inputs. For the results on the MNIST dataset, the size of the Jacobian for one training example is 1024 by 784 or 802,816 entries.
+
+Stacking autoencoders generally leads to better results, the encoded inputs from the first autoencoder leads directly into the next autoencoder yielding increased levels of representation.
+
+Training contractive autoencoders involves minimizing the reconstruction error and penalty term. For these results, a gradient descent method was used to train the weights.
 
 --------------
 Related Work
 --------------
+
 Manifold Charting
 * Brand2003: Charting Manifolds by soft partitioning the data into locally linear low-dimensional neighborhoods before computing the connection that gives the global low dimensional embedding using a Gaussian Mixture Model
 
@@ -31,9 +50,15 @@ Local Coordinate Coding
 Nonlinear Dimensionality Reduction using Neural Networks (Autoencoders)
 * Hinton2006: Reducing the dimensionality of data with neural networks: Introduces autoencoder 
 
+Denoising Autoencoders
+* Vincent2010
+
+Autoencoders with Weight Decay
+* Lee2008
+
 Other Manifold Learning methods see: http://www.postech.ac.kr/~seungjin/courses/dr/handouts/list.pdf
 --------------
-Contractive Auto-encoders
+Contractive autoencoders
 --------------
 - CAE can be used to do unsupervised learning of a robust representation of the data
 - Used to initialize an multi-layer preceptron

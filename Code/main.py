@@ -24,18 +24,19 @@ schatten_p_value = 1 # if you want to use infinity, use schatten_p_value = "inf"
 # will be created and saved to this file
 show_result = True
 # If save_result_filename == None or "" then we don't save an image
-save_result_filename = "result"
+save_result_filename = "result-1-1024-10000"
 # Append the datetime to the save_result_filename
 import datetime
 d = datetime.datetime.now()
 save_result_filename += "-" + str(d.year) + "-" + str(d.month) + "-" + str(d.day)
 save_result_filename += "-" + str(d.hour) + str(d.minute)
-save_result_filename += ".png"
+print "Saving results to", save_result_filename
 
 # read_amat_file is in helper_functions
 [X, Y] = read_amat_file(training_file_name, sample_size)
+print "Training File Read, starting fit"
 
-ae = CAE(epochs=num_epochs, n_hiddens=1024, schatten_p = schatten_p_value)
+ae = CAE(epochs=num_epochs, n_hiddens=num_hidden_units, schatten_p = schatten_p_value, save_results_file=save_result_filename)
 ae.fit(X, True)
 
 r_X = ae.reconstruct(X[0])
@@ -47,7 +48,7 @@ grid[0].imshow(numpy.reshape(X[0], (28,-1)))
 grid[1].imshow(numpy.reshape(r_X, (28,-1)))
 
 if save_result_filename != None and save_result_filename != "":
-  plt.savefig(save_result_filename)
+  plt.savefig(save_result_filename + ".png")
 if show_result:
   plt.show()
 
