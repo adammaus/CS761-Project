@@ -44,6 +44,12 @@ When regularizing with the schatten norm using p=infinity, we are trying to mini
 
 * An overcomplete representation illustrated by choosing more hidden nodes than inputs in an autoencoder would allow multiple complete and perfect reconstructions. In a CAE, the additional Jacobian penalty term chooses reconstructions that are robust to small changes to the data and learns the manifold's tangent directions. It is through this overcomplete representation that a deeper understanding of the data can be found than in a traditional autoencoder. It should also be noted, that the jacobian penalty term is not limited to autoencoders and other models could benefit by minimizing the contractive penalty term.
 
+The Schatten norm is calculated by finding the p norm of the singular values of y. One language specific way to perform this singular value decomposition is through the Lapack module.
+
+Python source code available at http://github.com/adam-maus
+
+The trained autoencoder has also been previously used to initialize multi-layer preceptrons. In previous work, the neural network is then trained to increase the classifiers abilities.
+
 --------------
 Related Work
 --------------
