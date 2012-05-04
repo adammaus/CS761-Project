@@ -36,7 +36,8 @@ class CAE(object):
                  batch_size=1, # Changed from 10 to 1 because it was computationally expensive
                  epochs=200,
                  schatten_p=2,
-                 save_results_file="results"):
+                 save_results_file="results",
+                 save_new_after_epoch = False):
         """
         Initialize a CAE.
         
@@ -71,6 +72,9 @@ class CAE(object):
         self.epochs = epochs
         self.schatten_p = schatten_p
         self.save_results_file = save_results_file
+        # Saves a new results file after each epoch
+        self.save_new_after_epoch = save_new_after_epoch
+        
     
     def _sigmoid(self, x):
         """
@@ -209,17 +213,15 @@ class CAE(object):
         def _schatten(p):
             # This is the most costly loop
             ex_s_norms = []
+            i = 1
             for sample in x:
             	j = self.jacobian(numpy.array([sample]))
             	s = numpy.linalg.svd(j[0,:,:], 1, 0)
             	s_norm = _pnorm(p, s)
             	ex_s_norms.append(s_norm)
-            # Old Method
-            #j = self.jacobian(x)
-            #for example in js:
-            #    s = numpy.linalg.svd(example, 1, 0)
-            #    s_norm = _pnorm(p, s)
-            #    ex_s_norms.append(s_norm)
+            	if i % 1000 == 0:
+                    print i,"/",len(x), "jacobians calculated"
+            	i = i + 1
             return numpy.average(ex_s_norms)
     
         def _pnorm(p, vect):
@@ -322,7 +324,11 @@ class CAE(object):
         
         for epoch in range(self.epochs):
             # Construct a cae_save object
-            save_cae = CAE_Save(self.save_results_file + '.png', self.save_results_file)
+            if self.save_new_after_epoch:
+                save_name = self.save_results_file + "-" + str(epoch)
+            else:
+                save_name = self.save_results_file
+            save_cae = CAE_Save(save_name + '.png', save_name)
             
             #print "Running mini-batch"
             for minibatch in range(n_batches):
