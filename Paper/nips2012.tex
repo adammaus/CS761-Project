@@ -38,34 +38,57 @@ Madison, WI 53706 \\
 \maketitle
 
 \begin{abstract}
-Contractive autoencoders have been used in unsupervised learning to learn a useful representation of data that minimizes reconstruction error and captures manifold structure through regularization by the Frobenius norm. We study a more general contractive autoencoder by replacing the Frobenius norm with the Schatten norm. The Schatten norm is a matrix norm that is equivalent to the $p$-norm of the singular values of a matrix while the Forbenius norm is a special case of the Schatten Norm with $p$ = 2. We show that using this penalty with $p$ = 1 results in greater contraction in the hidden layer of the autoencoder but tends to produce less accurate reconstruction.
+Contractive autoencoders have been used in unsupervised learning to learn a useful representation of data that minimizes reconstruction error and captures manifold structure through regularization of the hidden layer by the Frobenius norm. We study a more general contractive autoencoder by replacing the Frobenius norm penalty term with the Schatten norm. The Schatten norm is a matrix norm that is equivalent to the $p$-norm of the singular values of a matrix with the Forbenius norm being a special case of the Schatten Norm with $p$ = 2. We study the effect of the choice of $p$ in classification when the autoencoder is used to project data into a overcomplete feature space. We also look at the autoencoder's sensitivity to changes in the input data and learned manifold structure. Lastly, we study how classification can be improved by using the autoencoder to perform dimensionality reduction.
 \end{abstract}
 
 \section{Introduction}
 
-Algorithms that learn useful low-dimensional representations of high-dimensional data automatically have recently garnered attention because of their application in deep learning [Bengio 2009], manifold learning [Tenenbaum 2000, Roweis 2000], initialization of state-of-art classifiers [Bengio 2007], Deep Belief Networks [Hinton 2006 - Neural Comp], and Deep Boltzmann Machines [Salakhutdinov 2009]. 
+Autoencoders are unsupervised artificial neural networks used to learn new representations of data [Hinton 1995, Hinton 2006] with applications in hand-written character recognition, image recognition [Tan 2010], novelty assessment [Thompson 2002], and data visualization [Nadjarpoorsiyahkaly 2011]. Traditionally, autoencoders have been used to learn low-dimensional codes of data but new types of autoencoders have been introduced that learn useful high-dimensional representations of data with applications in deep learning [Bengio 2009], manifold learning [Tenenbaum 2000, Roweis 2000], initialization of state-of-art classifiers [Bengio 2007], Deep Belief Networks [Hinton 2006 - Neural Comp], and Deep Boltzmann Machines [Salakhutdinov 2009]. Autoencoders of this nature focus more on learning a sparse network structure and invariance to noisy data. To encourage sparsity and weight decay, a penalty term is added to the loss function that requires the sum of the weight values to be as small as possible [Kavukcuoglu 2009, Lee 2008]. Denoising autoencoders encourage invariance by first corrupting the input with noise and then try to learn the uncorrupted form of the data [Vincent 2010]. 
 
-Autoencoders are multilayer neural networks that can be used to learn low-dimensional codes of data [Hinton 1995, Hinton 2006]. Autoencoder applications include hand-written character and image recognition [Tan 2010], novelty assessment [Thompson 2002], and data visualization [Nadjarpoorsiyahkaly 2011]. Other types of autoencoders have been introduced that focus on smaller weights and robustness to noise. To encourage smaller weights and weight decay, a penalty term is added to the loss function that requires the sum of the weight values to be as small as possible [Kavukcuoglu 2009, Lee 2008]. Denoising autoencoders encourage invariance by first corrupting the input with noise and then trying to learn the uncorrupted form [Vincent 2010]. 
-
-The traditional autoencoder with $h$ hidden nodes trained on $n$ points with $d$ dimensions has the following encoding function, $e(x) = f_1(Wx + b_1) $ and decoding function, $d(x) = f_2(W^{T} e(x) + b_2) $, where the activation functions $f_1(x)$, $f_2(x)$ take the form of the sigmoid function $\frac{1}{1 + e^{-x}}$ in this study. $f_2(x)$ may also be a linear activation function depending on the application. $W$ is a matrix of real numbers of size $h$ x $d$, $b_1$ and $b_2$ are bias vectors of real numbers of size $h$ and $d$, respectively.
+The basic autoencoder maps data of dimension $d$ into an $h$ dimensional space. The autoencoder encodes data, $x$, using $e(x) = f_1(Wx + b_1) $ and decodes it to the original input space with $d(x) = f_2(W^{T} e(x) + b_2)$, where the activation functions $f_1(x)$, $f_2(x)$ take the form of the sigmoid function $\frac{1}{1 + e^{-x}}$. $f_2(x)$ may also be a linear activation function depending on the application. $W$ is a matrix of real numbers of size $h \times d$, $b_1$ and $b_2$ are bias vectors of real numbers of size $h$ and $d$, respectively. The autoencoder learns an accurate reconstruction of data by randomly initializing the parameters $W$, $b_1$, and $b_2$ and is trained through gradient descent while trying to minimize the objective function $L(W, b_1, b_2) = \sum^n_i{ || x_i - d(e(x_i)) ||^2 }$. Autoencoders that encourage weight decay add the following term $\lambda \sum_{i,j}{W_{ij}^2}$. 
 
 \section{Contractive Autoencoders (CAE)}
 
-Contractive autoencoders introduced by Rifai et al. [Rifai 2011] are similar in spirit to autoencoders with weight decay. The contractive autoencoder objective function is $L(W, b_1, b_2) = \sum^n_i{ || x_i - d(e(x_i)) ||^2 } + \lambda || J_e (x_i) ||_{S_p} $ where $|| Y ||_{S_p}$ represents the Schatten norm of $Y$ with a value of $p$. Rifai et al. use the Schatten norm with $p=2$ also known as the Frobenius norm of the Jacobian of the nonlinear encoding function: $ J_{e}(x_i) = \partial e(x_i) / \partial x_i$. Through this regularization, contractive autoencoders encourage a sparse represenation of the data that is also locally invariant. The goal of CAEs is to minimize the reconstruction error as well as the contraction around each of the training points. The contraction is maximized in directions orthogonal to the manifold so representations change very little in these directions while parallel directions have the most change in representation. 
+Contractive autoencoders introduced by Rifai et al. [Rifai 2011] are similar in spirit to autoencoders with weight decay however instead of trying to minimize the weights, the contractive autoencoder objective function is $L(W, b_1, b_2) = \sum^n_i{ || x_i - d(e(x_i)) ||^2 } + \lambda || J_e (x_i) ||_{S_p} $ where $|| Y ||_{S_p}$ represents the Schatten norm of $Y$ with a value of $p$. Rifai et al. use the Schatten norm with $p=2$ also known as the Frobenius norm of the Jacobian of the nonlinear encoding function, $ J_{e}(x_i) = \partial e(x_i) / \partial x_i$. Through this regularization, contractive autoencoders encourage a sparse representation of the data that is also locally invariant and maximizes contraction around each of the training points. The contraction is maximized in directions orthogonal to the manifold so representations change very little in these directions while parallel directions have the most change in representation. 
 
-CAEs learn deep representations of the data that are also robust to variations in the data by using an overcomplete representation and including the Jacobian penalty term. An overcomplete representation can be illustrated by choosing more hidden nodes than dimensions allowing an autoencoder multiple complete and perfect reconstructions. In a CAE, the additional Jacobian penalty term chooses reconstructions that are robust to small changes to the data and learns the manifold's tangent directions. It is through this overcomplete representation that a deeper understanding of the data can be found than in a traditional autoencoder. It should also be noted, that the jacobian penalty term is not limited to autoencoders and other models could benefit by minimizing the contractive penalty term.
+In addition to the regularization, CAEs learn deep representations of the data by using an overcomplete representation of the data. An overcomplete representation is produced by choosing more hidden nodes than dimensions allowing the autoencoder to have multiple perfect reconstructions. By also including the regularization, the autoencoder must choose reconstructions that are robust to small changes to the data with the added benefit that the CAE learns the manifold's tangent directions. It should be noted, that this regularization is not limited to autoencoders and other models could also benefit by maximizing the contraction around each data point.
 
-
-
-\subsection{Schatten Norm}
+% If we have enough material, we can put runtime complexity information in this subsection
+% \subsection{Schatten Norm}
+% The following snippet could be used here: The runtime complexity of calculating the Schatten norm is limited by the complexity of the singular value decomposition of the Jacobian for training point. 
 
 \section{Experiments}
 
 Training contractive autoencoders involves minimizing the $L(W, b_1, b_2)$. For these results, a gradient descent method was used to train the weights, $W$, $b_1$, and $b_2$.
 
-We compare the performance of the CAE with varying $p$ using the basic MNIST dataset. After training the CAE on the first 400 samples taken from the dataset, the CAE was tested and compared by using a $k$ nearest neighbors classifier on the MNIST test data. The classifier was set up such that the trained CAE encoded each training point and each test point. For each encoded test point, the euclidean distance was computed between it and each training point. The $k$ closest neighbors voted on the label for the test point with ties were broken randomly using a uniform distribution.
+We compare the performance of the CAE with varying $p$ using the basic MNIST dataset. After training each CAE with 1,000 hidden nodes on the first 400 samples taken from the dataset, the CAE was tested and compared by using a $k$ nearest neighbors classifier on the MNIST test data. The classifier was set up such that the trained CAE encoded each training point and each test point. For each encoded test point, the Euclidean distance was computed between it and each training point. The $k$ closest neighbors voted on the label for the test point with ties were broken randomly using a uniform distribution. Results can be seen in Table \ref{knn-table}.
 
+\begin{table}[t]
+\caption{Results of KNN classifiers on first 1,000 samples of MNIST}
+\label{knn-table}
+\begin{center}
+\begin{tabular}{ll}
+\multicolumn{1}{c}{\bf CAE Encoding} & \multicolumn{1}{c}{\bf Error}
+\\ \hline \\
+Schatten $p=1$         	&	23.50\% \\
+Schatten $p=2$          &	0.0\% \\
+Schatten $p=\infty$     &	0.0\% \\
+KNN with no encoding		& 27.25\% \\
+\end{tabular}
+\end{center}
+\end{table}
 
+% I am not sure if we want to include the following results:
+
+One way to measure the invariance of in training data is to study how the encoding changes as you vary the data. Figure \ref{ContractionCurve} shows the contraction curves for each of the CAEs with 1,000 hidden nodes trained on 400 samples from the MNIST data set.
+
+% Results
+
+Additionally, a contraction curve can be calculated after each epoch during the CAE training.
+
+% Results
+
+Lastly, the average singular values for each trained CAE can be plotted as shown in Figure \ref{}. The most sensitive directions have high singular values with values that quickly decrease due to the contractive nature of the autoencoder.
 
 \section{Conclusions}
 

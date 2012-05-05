@@ -1,4 +1,4 @@
-A:	Started adding notes to paper (05/02/2012)
+A:	Started adding notes to paper (05/02/2012). Further work on notes/paper (05/04/2012). Added code to save results after each epoch
 A:  Fixed memory error issue in cae.py. Added cae_classifier.py which is a KNN for the trained CAE. (04/30/2012)
 A:	Added cae_contraction.py which uses "results" from main.py and looks at variations in features around a single data point to see if these variations contract to the same encoding as the training point. It measures the difference between the encoding of the data point and the variation. I ran this a few times during training and a lower reconstruction seems to correlate with a lower difference between encodings. (04/28/2012)
 A:	I updated some of the code and pulled a function from main.py into helper_functions.py. I am planning to make a file called cae_contraction.py where we can study the contraction of the CAE. I would think that it may be interesting to visualize the contraction of variations in a single training point to the same reconstruction. (04/27/2012)
