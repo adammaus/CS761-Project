@@ -55,9 +55,9 @@ ae = CAE( n_hiddens=n_hidden,
 [tX, tY] = read_amat_file(testing_file_name, testing_sample_size)
 
 # For each training point, encode
-encoded_rX = []
-for x in rX:
-  encoded_rX.append(ae.encode(x))
+encoded_rX = [ae.encode(x) for x in rX]
+#for x in rX:
+#  encoded_rX.append(ae.encode(x))
 
 # 3) Measures the accuracy of the KNN on the test set
 # For each testing point, encode and see how it compares
