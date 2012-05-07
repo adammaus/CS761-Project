@@ -25,10 +25,11 @@ def read_amat_file(file_name, sample_size=None):
   return [numpy.array(X), numpy.array(Y)]
 
 def pnorm(p, vect):
+  absVect = [abs(x) for x in vect]
   if p == "inf":
-    return max(vect)
+    return max(absVect)
   summ = 0
-  for x in vect:
+  for x in absVect:
     summ += x**p
   return summ ** (1.0/float(p))
   
