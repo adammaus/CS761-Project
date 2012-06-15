@@ -242,6 +242,13 @@ class CAE(object):
             j = self.jacobian(x)
             # 100 x 1024 x 784
             # size of j = num_samples * hidden_nodes * (images dimensions)
+            # A = j**2
+            # A = tensor with 3rd dimension being each matrix
+            # A.sum(2) = a 2d matrix
+            # Each row contains 1 matrix of A. Element i,j = Sum of row i in matrix j of A
+            # A.sum(2).sum(1) = a row vector
+            # Element i = Sum of row i in A.sum(2)
+            # A.sum(2).sum(1).mean() = the mean of the row vector A.sum(2).sum(1)
             return (j**2).sum(2).sum(1).mean()
         
         # Removing _jacobi_loss ends up removing the power of CAE
